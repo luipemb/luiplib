@@ -1,4 +1,4 @@
- vers = "V1.1ex19"
+ vers = "V1.1ex20"
 array = "array"
 key = "key"
 
@@ -114,7 +114,31 @@ end
 
 
 
+-- 1. Guardamos a função original do shell para não quebrar o PC
+local originalRun = shell.run
 
+-- 2. Criamos a nossa versão "tunada" do shell.run
+shell.run = function(...)
+    -- Roda o programa original e guarda se deu certo e o erro
+    local result = { originalRun(...) }
+    
+    -- Assim que o programa FECHAR (o "end" final dele), isso aqui roda:
+    if errortable and next(errortable) then
+        tcolor("red")
+        print("\n[!] Resumo de erros do programa:")
+        -- Printa sua tabela de erros
+        for k, v in pairs(errortable) do
+            print(k .. ": " .. v)
+        end
+        tcolor()
+        
+        -- Limpa para o próximo programa não herdar erros deste
+        errortable = {}
+    end
+    
+    -- Devolve o resultado original (importante para o sistema)
+    return unpack(result)
+end
 
 
 
