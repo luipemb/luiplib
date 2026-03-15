@@ -1,4 +1,4 @@
- vers = "V1.0R"
+ vers = "V1.1ex"
 
 
 
@@ -39,3 +39,20 @@ function reset()
     term.setCursorPos(1,1)
 end
 
+------------------------------------------------ Tables
+
+function insert(tab, v)
+table.insert(tab, v) 
+end
+
+function remove(tab, v)
+table.remove(tab, v)
+end
+
+function concat(tab, plus)
+if plus == nil then
+reutrn table.concat(tab)
+else
+return table.concat(tab, plus)
+end
+end
