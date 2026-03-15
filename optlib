@@ -1,4 +1,7 @@
- vers = "V1.1ex1"
+ vers = "V1.1ex2"
+array = "array"
+key = "key
+
 
 
 
@@ -56,5 +59,33 @@ else
 table.concat(tab, plus)
 end
 end
+
+function checkintab(t, val)
+for i, v in ipairs(t) do 
+return v == val
+end
+end
+
+function printtab(t, type, tag)
+if type == "array" then
+for i, v in ipairs(t) do
+  if tag then
+    print(i..". "..v)
+    else
+    print(v)
+    end
+
+if type == "key" then
+for k, v in pairs(t) do
+  if tag then
+    print(k..": "..v)
+    else
+    print(v)
+    end
+
+end
+  
+
+
 
 
