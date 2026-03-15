@@ -1,4 +1,4 @@
- vers = "V1.1ex15"
+ vers = "V1.1ex16"
 array = "array"
 key = "key"
 
@@ -112,6 +112,7 @@ tcolor("red")
 printtab(errortable, key)
 tcolor()
 end
+os.startTimer(1)
 
 
 
