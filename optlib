@@ -107,10 +107,11 @@ end
 end
 
 
+if next(errortable) then
 tcolor("red")
 printtab(errortable, key)
 tcolor()
-sleep(0.1)
+end
 
 
 
