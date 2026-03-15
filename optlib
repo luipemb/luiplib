@@ -114,34 +114,41 @@ end
 
 
 
--- Tentamos pegar o shell do ambiente global ou do ambiente atual
-local sh = _G.shell or shell
+-- 1. Tentativa máxima de achar o shell
+local sh = _G.shell or (term and shell) 
 
-if sh then
+if sh and sh.run then
     local originalRun = sh.run
 
+    -- 2. Sobrescrevemos o shell.run
     sh.run = function(...)
-        -- 1. Roda o programa
+        -- Executa o programa do usuário
         local result = { originalRun(...) }
         
-        -- 2. No final (o "end"), verifica a tabela
-        -- Usamos next() porque você disse que é uma tabela de chaves
+        -- 3. O "END" DO PROGRAMA: Isso aqui roda logo após o programa fechar
+        -- Verificamos se a errortable (global) tem chaves
         if _G.errortable and next(_G.errortable) then
             tcolor("red")
-            print("\n[!] Erros acumulados na execucao:")
+            print("\n" .. string.rep("-", 15))
+            print(" [!] RESUMO DE ERROS:")
             
-            -- Usa sua printtab para mostrar os erros
+            -- Usa sua função para printar o que sobrou na tabela
+            -- Passamos _G.errortable explicitamente
             printtab(_G.errortable, "key", true)
             
+            print(string.rep("-", 15))
             tcolor()
-            _G.errortable = {} -- Limpa para a próxima rodada
+            
+            -- 4. Limpa a tabela para o próximo programa não ler erros velhos
+            _G.errortable = {}
         end
         
+        -- Devolve os retornos originais do programa
         return unpack(result)
     end
 else
-    -- Se mesmo assim for nil, avisamos no console
-    print("Aviso: Nao foi possivel 'hackear' o shell.run")
+    -- Se você ver isso no mine, o import foi feito de um jeito muito restrito
+    print("Erro: API Shell inacessivel para monitoramento.")
 end
 
 
