@@ -3,7 +3,7 @@ array = "array"
 key = "key"
 
 ----------------------
-errortable = {1}
+errortable = {}
 -----------------------
 
 
@@ -75,13 +75,18 @@ function printtab(t, type, tag)
 local info = debug.getinfo(2, "Sl")
 local line = info.currentline
 
+if error then
+printtab(errortable, key)
+
 if t == nil then
 insert(errortable, line..": Error--table no specified (>t<, type, order)")
+error = true
 end
 
 if type == nil then
 insert(errortable, line..": Error--type not specified (t, >type<, order)")
 insert(errortable, line..": Types: array; key;")
+error = true
 end
 
 if type == "array" then
@@ -105,10 +110,6 @@ end
 end
 
 end
-
-
-sleep(0.5)
-printtab(errortable, key)
 
 
 
