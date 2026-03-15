@@ -1,4 +1,4 @@
- vers = "V1.1ex25"
+ vers = "V1.1ex26"
 array = "array"
 key = "key"
 
@@ -7,7 +7,9 @@ errortable = {}
 -----------------------
 
 function printerror()
+tcolor("red")
 printtab(errortable, key)
+tcolor()
 end
 
 
