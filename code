@@ -1,0 +1,27 @@
+
+
+function tcolor(c)
+    term.setTextColor(colors.c)
+end
+
+function bcolor(c)
+    term.setBackgroundColor(colors.c)
+end
+
+function clear()
+  term.clear()
+end
+
+function cursorpos(x, y)
+  if x == nil or y == nil then
+  term.setCursorPos(1, 1)
+  else
+  term.setCursorPos(x, y)
+end
+end
+
+
+function reset()
+    term.clear()
+    term.setCursorPos(1,1)
+end
