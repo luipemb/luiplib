@@ -1,4 +1,4 @@
-vers = "V1.0R"
+ vers = "V1.0R"
 
 
 
@@ -37,15 +37,5 @@ end
 function reset()
     term.clear()
     term.setCursorPos(1,1)
-end
-
-
-function table(t, v, act)
-if act == "insert" then
-return table.insert(t, v)
-
-elseif act == "remove" then
-return table.remove(t, v)
-end
 end
 
