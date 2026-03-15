@@ -1,9 +1,9 @@
- vers = "V1.1ex9"
+ vers = "V1.1ex10"
 array = "array"
 key = "key"
 
 ----------------------
-errortable = {}
+errortable = {"test"}
 -----------------------
 
 
@@ -76,11 +76,11 @@ local info = debug.getinfo(2, "Sl")
 local line = info.currentline
 
 if t == nil then
-insert(errortable, line..": Error: table no specified (>t<, type, order)")
+insert(errortable, line..": Error--table no specified (>t<, type, order)")
 end
 
 if type == nil then
-insert(errortable, line..": Error: type not specified (t, >type<, order)")
+insert(errortable, line..": Error--type not specified (t, >type<, order)")
 insert(errortable, line..": Types: array; key;")
 end
 
