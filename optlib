@@ -1,10 +1,14 @@
- vers = "V1.1ex18"
+ vers = "V1.1ex19"
 array = "array"
 key = "key"
 
 ----------------------
 errortable = {}
 -----------------------
+
+function start()
+printtab(errortable, key)
+end
 
 
 function tcolor(c)
@@ -75,9 +79,6 @@ function printtab(t, type, tag)
 local info = debug.getinfo(2, "Sl")
 local line = info.currentline
 
-if error then
-printtab(errortable, key)
-
 if t == nil then
 insert(errortable, line..": Error--table no specified (>t<, type, order)")
 error = true
@@ -110,6 +111,8 @@ end
 end
 
 end
+
+
 
 
 
