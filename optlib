@@ -51,8 +51,8 @@ end
 
 function concat(tab, plus)
 if plus == nil then
-reutrn table.concat(tab)
+table.concat(tab)
 else
-return table.concat(tab, plus)
+table.concat(tab, plus)
 end
 end
