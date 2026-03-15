@@ -1,4 +1,4 @@
- vers = "V1.1ex3"
+ vers = "V1.1ex4"
 array = "array"
 key = "key"
 
@@ -68,12 +68,16 @@ end
 
 function printtab(t, type, tag)
 if t == nil then
+tcolor("red")
 print("Error, table no specified (>t<, type, order)")
+tcolor()
 end
 
 if type == nil then
+tcolor("red")
 print("Error, type not specified (t, >type<, order)")
 print("Types: array; key;")
+tcolor()
 end
 
 if type == "array" then
