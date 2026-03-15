@@ -1,4 +1,4 @@
- vers = "V1.1ex27"
+ vers = "V1.1ex28"
 array = "array"
 key = "key"
 
@@ -83,7 +83,7 @@ local info = debug.getinfo(2, "Sl")
 local line = info.currentline
 
 if t == nil then
-insert(errortable, line..": Error--table no specified (>t<, type, order)")
+insert(errortable, line..": Error--table not specified (>t<, type, order)")
 error = true
 end
 
