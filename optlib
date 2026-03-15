@@ -1,4 +1,4 @@
- vers = "V1.1ex2"
+ vers = "V1.1ex3"
 array = "array"
 key = "key"
 
@@ -67,6 +67,15 @@ end
 end
 
 function printtab(t, type, tag)
+if t == nil then
+print("Error, table no specified (>t<, type, order)")
+end
+
+if type == nil then
+print("Error, type not specified (t, >type<, order)")
+print("Types: array; key;")
+end
+
 if type == "array" then
 for i, v in ipairs(t) do
   if tag then
