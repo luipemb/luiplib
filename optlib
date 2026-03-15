@@ -2,9 +2,13 @@
 array = "array"
 key = "key"
 
-
+----------------------
 errortable = {}
 
+tcolor("red")
+printtab(errortable, key)
+tcolor()
+-----------------------
 
 
 function tcolor(c)
@@ -72,8 +76,8 @@ end
 
 
 function printtab(t, type, tag)
-local info = debug.getinfo(2)
-local line = info.linedefined
+local info = debug.getinfo(2, "Sl")
+local line = info.currentline
 
 if t == nil then
 insert(errortable, line..": Error: table no specified (>t<, type, order)")
