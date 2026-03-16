@@ -1,4 +1,4 @@
- vers = "V1.1ex29"
+ vers = "V1.1ex30"
 array = "array"
 key = "key"
 
@@ -123,7 +123,7 @@ function errortableprint()
 
 while true do 
 for i, v in ipairs(errortable) do
- reset()
+ --reset()
  print(v)
  end
 sleep(0.2)
