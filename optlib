@@ -1,4 +1,4 @@
- vers = "V1.1ex37"
+ vers = "V1.1ex38"
 array = "array"
 key = "key"
 
@@ -120,6 +120,10 @@ end
 end
 
 
+while true do
+sleep(1)
+end
+
 
 end
 print("loading errortableprint()")
@@ -140,7 +144,7 @@ end
 end
 
 print("executing parallel")
-parallel.waitForAny(main, errortableprint)
+parallel.waitForAny(errortableprint, main)
 print("executed parallel")
 
 
