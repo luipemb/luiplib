@@ -1,4 +1,4 @@
- vers = "V1.1ex35"
+ vers = "V1.1ex36"
 array = "array"
 key = "key"
 
@@ -115,12 +115,15 @@ for k, v in pairs(t) do
     end
 end
 end
-
 end
+
+
+
 end
 
 function errortableprint()
 
+print("start")
 while true do 
 print("hi")
 
