@@ -132,7 +132,7 @@ function errortableprint()
 
 print("start")
 while true do 
-print("hi")
+print("hi1")
 
 if #errortable>0 then
 print("hi2")
