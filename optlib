@@ -1,4 +1,4 @@
- vers = "V1.1ex33"
+ vers = "V1.1ex34"
 array = "array"
 key = "key"
 
@@ -122,7 +122,6 @@ end
 function errortableprint()
 
 while true do 
-if next(errortable) then
 
 for i, v in ipairs(errortable) do
 print(v)
