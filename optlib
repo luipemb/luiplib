@@ -1,4 +1,4 @@
- vers = "V1.1ex42"
+ vers = "V1.1ex43"
 array = "array"
 key = "key"
 
@@ -84,14 +84,16 @@ local info = debug.getinfo(2, "Sl")
 local line = info.currentline
 
 if t == nil then
-insert(errortable, line..": Error--table not specified (>t<, type, order)")
-error = true
+insert(errortable, line..": Error -- table not specified (>T<, type, order)")
 end
 
 if type == nil then
-insert(errortable, line..": Error--type not specified (t, >type<, order)")
-insert(errortable, line..": Types: array; key;")
-error = true
+insert(errortable, line..": Error -- type not specified (t, >TYPE<, order)")
+insert(errortable, ": Types -- array / key")
+end
+
+if type(order) == "string" then
+insert(errortable, line..": Error -- expected boolean (t, type, >ORDER<)")
 end
 
 if type == "array" then
