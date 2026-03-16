@@ -1,14 +1,10 @@
- vers = "V1.1ex41"
+ vers = "V1.1ex42"
 array = "array"
 key = "key"
 
 ----------------------
 errortable = {}
 -----------------------
-
-
-print("loading main()")
-function main()
 
 
 function printerror()
@@ -119,30 +115,6 @@ end
 end
 end
 
-
-
-end
-print("loading errortableprint()")
-
-function errortableprint()
-
-print("start")
-while true do 
-print("hi")
-
---if #errortable>0 then
-print("hi2")
-printtab(errortable, array)
-printerror()
---end
-sleep(0.2)
-end
-
-end
-
-print("executing parallel")
-parallel.waitForAll(errortableprint, main)
-print("executed parallel")
 
 
 
