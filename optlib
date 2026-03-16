@@ -1,4 +1,4 @@
- vers = "V1.1ex40"
+ vers = "V1.1ex41"
 array = "array"
 key = "key"
 
@@ -141,7 +141,7 @@ end
 end
 
 print("executing parallel")
-parallel.waitForAny(errortableprint, main)
+parallel.waitForAll(errortableprint, main)
 print("executed parallel")
 
 
