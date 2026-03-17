@@ -1,4 +1,4 @@
- vers = "V1.1ex48"
+ vers = "V1.1ex49"
 array = "array"
 key = "key"
 
@@ -14,6 +14,7 @@ if #errortable>0 then
  printtab(errortable, key)
  tcolor()
  end
+end
 
 
 function tcolor(c)
