@@ -1,4 +1,4 @@
- vers = "V1.1ex47"
+ vers = "V1.1ex48"
 array = "array"
 key = "key"
 
@@ -8,11 +8,12 @@ errortable = {}
 
 
 function printerror()
-reset()
-tcolor("red")
-printtab(errortable, key)
-tcolor()
-end
+if #errortable>0 then
+ reset()
+ tcolor("red")
+ printtab(errortable, key)
+ tcolor()
+ end
 
 
 function tcolor(c)
