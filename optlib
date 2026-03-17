@@ -1,9 +1,9 @@
- vers = "V1.1ex46"
+ vers = "V1.1ex47"
 array = "array"
 key = "key"
 
 ----------------------
-_G.errortable = _G.errortable or {} 
+errortable = {}
 -----------------------
 
 
