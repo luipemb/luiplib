@@ -1,5 +1,5 @@
 id = "optlib"
-vers = "V1.2ex10"
+vers = "V1.2ex11"
 ------------------------
 array = "array"
 key = "key"
@@ -67,8 +67,8 @@ term.write(msg)
 tcolor()
 end
 --========================================================================================================
-function cprint(msg, c)
-tcolor(colors.c)
+function cprint(msg, colors.c)
+tcolor(c)
 print(msg)
 tcolor()
 end
