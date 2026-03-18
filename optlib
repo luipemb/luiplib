@@ -1,5 +1,5 @@
 id = "optlib"
-vers = "V1.2ex9"
+vers = "V1.2ex10"
 ------------------------
 array = "array"
 key = "key"
@@ -61,12 +61,14 @@ function reset()
     term.setCursorPos(1,1)
 end
 --========================================================================================================
-function awrite(msg)
+function cwrite(msg, c)
+tcolor(c)
 term.write(msg)
+tcolor()
 end
 --========================================================================================================
 function cprint(msg, c)
-tcolor(c)
+tcolor(colors.c)
 print(msg)
 tcolor()
 end
