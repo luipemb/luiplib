@@ -1,35 +1,56 @@
-name: Sync Stable Version
+name: Sync All Stable Files
 
 on:
   push:
     branches:
-      - main  
+      - main
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check version and Sync
-        run: |
-          
-          VERSION=$(grep -oP 'vers\s*=\s*"\K[^"]+' optlib)
-          
-          echo "Version detected: $VERSION"
+      - name: Install Lua
+        run: sudo apt-get install -y lua5.1
 
+      - name: Sync Stable Versions
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          if [[ ! "$VERSION" =~ "ex" ]]; then
-            echo "Stable version! Syncing"
-            cp optlib optlibS
+          for file in $(ls *.lua | grep -v "S.lua"); do
+            echo "Analyzing: $file"
             
+            if ! luac -p "$file"; then
+              echo "  -> [ERROR] Syntax error in $file. Skipping..."
+              continue
+            fi
+
+            VERSION=$(grep -oP 'vers\s*=\s*"\K[^"]+' "$file" || true)
             
-            git config --global user.name "github-actions[bot]"
-            git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            git add optlibS
-            git commit -m "Auto-sync stable version: $VERSION"
+            if [ -z "$VERSION" ]; then
+              echo "  -> [SKIPPED] Variable 'vers' not found."
+              continue
+            fi
+
+            if [[ ! "$VERSION" =~ "ex" ]]; then
+              STABLE_NAME="${file%.lua}S"
+              
+              echo "  -> [OK] Stable version $VERSION detected. Syncing to $STABLE_NAME"
+              cp "$file" "$STABLE_NAME"
+              git add "$STABLE_NAME"
+            else
+              echo "  -> [EXP] Experimental version $VERSION detected."
+            fi
+          done
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto-sync stable versions"
             git push
           else
-            echo "Ex version ($VERSION). Waiting until a stable version"
+            echo "No stable changes to update."
           fi
