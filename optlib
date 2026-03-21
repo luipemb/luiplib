@@ -1,5 +1,6 @@
+
 library = "optlib"
-vers = "V1.2ex7"
+vers = "V1.2ex8"
 ------------------------
 array = "array"
 key = "key"
@@ -110,6 +111,17 @@ if os.clock() - lastping > 0.5 then
 end
 sleep(0.5)
 end
+end
+--========================================================================================================
+function pressed(k)
+ while true do
+  local event, key, is_held = os.pullEvent("key")
+  local keyname = keys.getName(key)
+
+  if keyname == k then 
+   return true
+   end
+  end
 end
 --========================================================================================================
 function constant(time, cmd)
