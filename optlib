@@ -1,5 +1,5 @@
 library = "optlib"
-vers = "V1.2ex4"
+vers = "V1.2ex5"
 ------------------------
 array = "array"
 key = "key"
@@ -87,6 +87,7 @@ return redstone.setOutput(side)
 end
 --========================================================================================================
 function ping(actON, actOFF)
+reset()
 local f1 = load(actON)
 local f2 = load(actOFF)
 while true do
