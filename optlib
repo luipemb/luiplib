@@ -1,5 +1,5 @@
 library = "optlib"
-vers = "V1.2ex6"
+vers = "V1.2ex7"
 ------------------------
 array = "array"
 key = "key"
@@ -111,6 +111,16 @@ end
 sleep(0.5)
 end
 end
+--========================================================================================================
+function constant(time, cmd)
+
+local c = load(cmd)
+while true do
+c()
+sleep(time)
+end
+end
+
 
 
 
