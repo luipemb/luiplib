@@ -1,6 +1,6 @@
 
 library = "optlib"
-vers = "V1.2ex8"
+vers = "V1.2ex9"
 ------------------------
 array = "array"
 key = "key"
@@ -125,12 +125,23 @@ function pressed(k)
 end
 --========================================================================================================
 function constant(time, cmd)
+    local c = load(cmd)
+    local running = true
 
-local c = load(cmd)
-while true do
-c()
-sleep(time)
-end
+    while running do
+        c()
+       
+        local t = os.startTimer(time)
+        while true do
+            local event, p1 = os.pullEvent()
+            if event == "timer" and p1 == t then 
+                break 
+            elseif event == "key" and keys.getName(p1) == "leftCtrl" then
+                running = false 
+                break
+            end
+        end
+    end
 end
 
 
