@@ -1,6 +1,6 @@
 
 library = "optlib"
-vers = "V1.2ex15"
+vers = "V1.3"
 ------------------------
 array = "array"
 key = "key"
@@ -226,7 +226,7 @@ helpcommands = {
 "> pwrap(side) --- wraps a peripheral.",
 "> redinput(side) --- returns a redstone input.",
 "> redoutput(side, b) --- executes redstone.setOutput.",
-"> ping(actOFF, actON) --- reacts to a received value (rednet.receive()) and executes commands if the any sort of information is being or not received.",
+"> ping(actOFF, actON) --- reacts to a received value (rednet.receive()) and executes commands if any sort of information is being or not received.",
 "> pressed(k) --- returns true if a key is pressed.",
 "> constant(time, cmd) --- constantly executes a command after x time is passed.",
 "",
