@@ -26,48 +26,42 @@ jobs:
           
           git checkout main
 
-          # Agora procuramos arquivos que NÃO terminam com 'S' e não têm extensão
-          # Isso vai pegar o seu 'optlib'
           for file in *; do
-            # Pula se for diretório ou se o arquivo terminar com 'S' (para não ler o optlibS)
             [ -f "$file" ] || continue
             [[ "$file" == *S ]] && continue
             [[ "$file" == *"."* ]] && continue # Ignora arquivos com extensão como .yaml ou .lua
 
-            echo "Analisando arquivo: $file"
+            echo "Checking file: $file"
             
-            # Tenta validar como Lua mesmo sem extensão
             if ! luac -p "$file"; then
-              echo "  -> [PULADO] $file não parece ser um script Lua válido."
+              echo "  -> [SKIPED] $file doesn't seems like a valid script."
               continue
             fi
 
-            # Pega a versão dentro do arquivo
             VERSION=$(grep -oP 'vers\s*=\s*"\K[^"]+' "$file" | tr -d ' ' || true)
             
             if [ -z "$VERSION" ]; then
-              echo "  -> [PULADO] Variável 'vers' não encontrada em $file."
+              echo "  -> [SKIPED] Variable 'vers' not founded in $file."
               continue
             fi
 
-            echo "  -> Versão encontrada: '$VERSION'"
+            echo "  -> Version detected: '$VERSION'"
 
-            # Se não for experimental, sincroniza
             if [[ ! "$VERSION" =~ "ex" ]]; then
               STABLE_NAME="${file}S"
               
-              echo "  -> [STABLE] Copiando $file para $STABLE_NAME"
+              echo "  -> [STABLE] copying $file to $STABLE_NAME"
               cp -f "$file" "$STABLE_NAME"
               git add "$STABLE_NAME"
             else
-              echo "  -> [BETA] $VERSION é experimental. Ignorando."
+              echo "  -> [EXP] $VERSION is experimental. Ignoring."
             fi
           done
 
           if ! git diff --cached --quiet; then
-            echo "Mudanças detectadas. Realizando push..."
-            git commit -m "Auto-sync: optlibS atualizado para $VERSION"
+            echo "Detected changes. Starting push..."
+            git commit -m "Auto-sync: optlibS updated to $VERSION"
             git push origin main
           else
-            echo "Nenhuma mudança detectada. O conteúdo de optlibS já é idêntico ao optlib."
+            echo "No change. The content hasn't changed."
           fi
