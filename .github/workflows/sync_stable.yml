@@ -28,40 +28,44 @@ jobs:
 
           for file in *; do
             [ -f "$file" ] || continue
-            [[ "$file" == *S ]] && continue
-            [[ "$file" == *"."* ]] && continue # Ignora arquivos com extensão como .yaml ou .lua
-
-            echo "Checking file: $file"
+            [[ "$file" == *"."* ]] && continue 
             
-            if ! luac -p "$file"; then
-              echo "  -> [SKIPED] $file doesn't seems like a valid script."
+            if [[ "$file" == *S ]]; then
+              continue
+            fi
+
+            echo "------------------------------------------"
+            echo "Analyzing base file: $file"
+            
+            if ! luac -p "$file" 2>/dev/null; then
+              echo "  -> [SKIPPED] $file is not a valid Lua script."
               continue
             fi
 
             VERSION=$(grep -oP 'vers\s*=\s*"\K[^"]+' "$file" | tr -d ' ' || true)
             
             if [ -z "$VERSION" ]; then
-              echo "  -> [SKIPED] Variable 'vers' not founded in $file."
+              echo "  -> [WARNING] 'vers' variable not found in $file."
               continue
             fi
 
-            echo "  -> Version detected: '$VERSION'"
+            echo "  -> Detected version: '$VERSION'"
 
             if [[ ! "$VERSION" =~ "ex" ]]; then
               STABLE_NAME="${file}S"
               
-              echo "  -> [STABLE] copying $file to $STABLE_NAME"
+              echo "  -> [STABLE] Syncing to $STABLE_NAME..."
               cp -f "$file" "$STABLE_NAME"
               git add "$STABLE_NAME"
             else
-              echo "  -> [EXP] $VERSION is experimental. Ignoring."
+              echo "  -> [BETA] Version $VERSION is experimental. Skipping sync."
             fi
           done
 
           if ! git diff --cached --quiet; then
-            echo "Detected changes. Starting push..."
-            git commit -m "Auto-sync: optlibS updated to $VERSION"
+            echo "Changes detected in stable files. Committing..."
+            git commit -m "Auto-sync: Global update of stable files"
             git push origin main
           else
-            echo "No change. The content hasn't changed."
+            echo "No changes detected. All 'S' files are already up to date."
           fi
