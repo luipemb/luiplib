@@ -1,6 +1,6 @@
 
 library = "optlib"
-vers = "V1.2ex12"
+vers = "V1.2ex13"
 ------------------------
 array = "array"
 key = "key"
@@ -221,8 +221,8 @@ helpcommands = {
 "> clear() --- clears everything.",
 "> cursorpos(x, y) --- set the cursor position.", 
 "> reset() --- executes clear() and cursorpos(1, 1).",
-"> cwrite(c, txt) --- writes a text with color.",
-"> cprint(c, txt) --- prints a text with color.",
+"> cwrite(txt, c) --- writes a text with color.",
+"> cprint(txt, c) --- prints a text with color.",
 "> pwrap(side) --- wraps a peripheral.",
 "> redinput(side) --- returns a redstone input.",
 "> redoutput(side, b) --- executes redstone.setOutput.",
