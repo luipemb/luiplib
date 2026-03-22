@@ -21,60 +21,53 @@ jobs:
 
       - name: Sync Stable Versions
         run: |
-          # Configurações de Identidade
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Garante que estamos na main atualizada
           git checkout main
 
-          # Loop por todos os arquivos .lua
-          for file in *.lua; do
-            [ -e "$file" ] || continue
-            
-            # Pula arquivos que já terminam com S.lua se existirem (evita recursão)
-            if [[ "$file" == *S.lua ]]; then continue; fi
+          # Agora procuramos arquivos que NÃO terminam com 'S' e não têm extensão
+          # Isso vai pegar o seu 'optlib'
+          for file in *; do
+            # Pula se for diretório ou se o arquivo terminar com 'S' (para não ler o optlibS)
+            [ -f "$file" ] || continue
+            [[ "$file" == *S ]] && continue
+            [[ "$file" == *"."* ]] && continue # Ignora arquivos com extensão como .yaml ou .lua
 
             echo "Analisando arquivo: $file"
             
-            # Verifica erro de sintaxe
+            # Tenta validar como Lua mesmo sem extensão
             if ! luac -p "$file"; then
-              echo "  -> [ERRO] Erro de sintaxe em $file. Pulando..."
+              echo "  -> [PULADO] $file não parece ser um script Lua válido."
               continue
             fi
 
-            # Extrai a versão (ex: 1.3) limpando espaços
+            # Pega a versão dentro do arquivo
             VERSION=$(grep -oP 'vers\s*=\s*"\K[^"]+' "$file" | tr -d ' ' || true)
             
             if [ -z "$VERSION" ]; then
-              echo "  -> [PULADO] Variável 'vers' não encontrada."
+              echo "  -> [PULADO] Variável 'vers' não encontrada em $file."
               continue
             fi
 
             echo "  -> Versão encontrada: '$VERSION'"
 
-            # Se NÃO contém "ex", é estável
+            # Se não for experimental, sincroniza
             if [[ ! "$VERSION" =~ "ex" ]]; then
-              # Define o nome de destino: remove .lua e adiciona S (ex: optlibS)
-              STABLE_NAME="${file%.lua}S"
+              STABLE_NAME="${file}S"
               
-              echo "  -> [STABLE] Sincronizando $file para $STABLE_NAME"
-              
-              # Força a cópia/sobrescrita
+              echo "  -> [STABLE] Copiando $file para $STABLE_NAME"
               cp -f "$file" "$STABLE_NAME"
-              
-              # Adiciona ao index do Git
               git add "$STABLE_NAME"
             else
-              echo "  -> [BETA] Versão experimental detectada. Nada a fazer."
+              echo "  -> [BETA] $VERSION é experimental. Ignorando."
             fi
           done
 
-          # Verifica se houve mudanças reais antes de commitar
           if ! git diff --cached --quiet; then
             echo "Mudanças detectadas. Realizando push..."
-            git commit -m "Auto-sync: Atualizando arquivos estáveis para versão $VERSION"
+            git commit -m "Auto-sync: optlibS atualizado para $VERSION"
             git push origin main
           else
-            echo "Nenhuma alteração pendente (optlibS já está igual ao optlib.lua)."
+            echo "Nenhuma mudança detectada. O conteúdo de optlibS já é idêntico ao optlib."
           fi
