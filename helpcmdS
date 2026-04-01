@@ -2,6 +2,7 @@
 
 
 _G.rootcmds = function()
+--------------------------------------------------------------------------------------------------------------------
 print("")
 term.setTextColor(colors.yellow)
 print("=============================================")
@@ -9,16 +10,20 @@ print("You are using CC:Library datapack!")
 print("Commands:")
 print(" ")
 term.setTextColor(colors.green)
+--------------------------------------------------------------------------------------------------------------------
 term.write(" > import(")
 term.setTextColor(colors.blue)
 term.write("[lib]")
 term.setTextColor(colors.green)
 term.write(") --- import a library.")
 print("")
+--------------------------------------------------------------------------------------------------------------------
 term.write(" > libraries() --- See every library.")
 print("")
+--------------------------------------------------------------------------------------------------------------------
 term.write(" > reimport() --- Reimport loaded libraries.")
 print("")
+--------------------------------------------------------------------------------------------------------------------
 term.write(" > collect(")
 term.setTextColor(colors.blue)
 term.write("[lib], [key]")
@@ -27,6 +32,24 @@ term.write(") --- get a table, variable")
 print("")
 term.write("   etc without completly importing the lib.")
 print("")
+--------------------------------------------------------------------------------------------------------------------
+term.write(" > setrepo(")
+term.setTextColor(colors.blue)
+term.write("[Creator], [Repo]")
+term.setTextColor(colors.green)
+term.write(") --- set a repo to import.")
+print("")
+--------------------------------------------------------------------------------------------------------------------
+term.write("set(")
+term.setTextColor(colors.blue)
+term.write("[Var], [True/False]")
+term.setTextColor(colors.green)
+term.write(") --- set an existing or")
+print("")
+term.write("    not variable to true or false.")
+print("")
+--------------------------------------------------------------------------------------------------------------------
+
 term.setTextColor(colors.yellow)
 print("=============================================")
 print("")
