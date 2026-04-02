@@ -1,4 +1,4 @@
-
+vers = ""
 
 
 _G.rootcmds = function()
