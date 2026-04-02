@@ -39,7 +39,7 @@ term.write("[Creator], [Repo]")
 term.setTextColor(colors.green)
 term.write(") --- set a repo to ")
 print("")
-term.write("import.")
+term.write("   import.")
 print("")
 --------------------------------------------------------------------------------------------------------------------
 term.write(" > set(")
@@ -48,7 +48,7 @@ term.write("[Var], [True/False]")
 term.setTextColor(colors.green)
 term.write(") --- set an existing or")
 print("")
-term.write("    not variable to true or false.")
+term.write("   not variable to true or false.")
 print("")
 --------------------------------------------------------------------------------------------------------------------
 
