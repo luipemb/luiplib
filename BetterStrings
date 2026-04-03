@@ -1,4 +1,4 @@
-vers = "V1.1"
+vers = "V1.1.1"
 local oldprint = print
 
 function cstring(c, string)
@@ -53,6 +53,7 @@ function print(st)
   process()
 end
 
+do
 helpcommands = {
 "==================================",
 "Desc: With BetterStrings you are now able to create colorful strings and use them anywhere (even index tables!).",
@@ -61,4 +62,4 @@ helpcommands = {
 "> [MODDED] print(string) --- Prints normal and colored strings.",
 "=================================="
 }
-local _ = nil
+end
