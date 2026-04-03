@@ -48,8 +48,10 @@ end
 
 
 helpcommands = {
+"==================================",
 "Desc: With BetterStrings you are now able to create colorful strings and use them anywhere (even index tables!).",
-"",
+"==================================",
 "> cstring(c, string) --- Creates a printable colored string.",
-"> [MODDED] print(string) --- Prints normal and colored strings."
+"> [MODDED] print(string) --- Prints normal and colored strings.",
+"=================================="
 }
