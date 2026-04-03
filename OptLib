@@ -1,6 +1,6 @@
 
 library = "optlib"
-vers = "V1.3"
+vers = "V1.3.1"
 ------------------------
 array = "array"
 key = "key"
@@ -213,7 +213,7 @@ end
 end
 
 
-
+do
 helpcommands = {
 "==================================",
 "Desc: OptLib offers a pack of shortcuts for commands that are unnecessarily long.",
@@ -241,7 +241,6 @@ helpcommands = {
 "=================================="
 }
 
-
-local _ = nil
+end
 
 
