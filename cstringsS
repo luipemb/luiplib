@@ -4,7 +4,7 @@ local created = 0
 function cstring(c, string)
   created = created + 1
   _G[string] = {string, c}    
-  return string.."_@CSTRING@"
+  return "@CSTRING_"..string.."_CSTRING@"
 end
 
 function csprint(st)
@@ -12,11 +12,16 @@ function csprint(st)
     term.setTextColor(colors[st[2]])
     print(st[1])
     term.setTextColor(colors.white)
-  elseif string.find(st, "_@CSTRING@") then
-    local Nst = _G[string.gsub(st, "_@CSTRING@", "")]
-    term.setTextColor(colors[Nst[2]])
-    print(Nst[1])
-    term.setTextColor(colors.white)
+  elseif type(st) == "string" then
+    local Nst = string.match(st, "@CSTRING_(.-)_CSTRING@")  
+    if Nst then
+      local before = string.match(st, "^(.-)@CSTRING_")
+      local after = string.match(st, "_CSTRING@(.*)$")
+      term.setTextColor(colors[Nst[2]])
+      term.write(before)
+      term.write(Nst[1])
+      term.write(after)
+      term.setTextColor(colors.white)
   else
     print(st)
   end
