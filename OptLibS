@@ -1,0 +1,243 @@
+
+library = "optlib"
+vers = "V1.3"
+------------------------
+array = "array"
+key = "key"
+
+top = "top"
+bottom = "bottom"
+left = "left"
+right = "right"
+back = "back"
+front = "front"
+
+local lastping = os.clock()
+----------------------
+errortable = {}
+-----------------------
+
+
+--========================================================================================================
+function printerror()
+if #errortable>0 then
+ reset()
+ tcolor("red")
+ printtab(errortable, key)
+ tcolor()
+ end
+end
+--========================================================================================================
+function tcolor(c)
+if c == nil then
+    term.setTextColor(colors.white)
+else
+    local color = colors[c] or c
+    term.setTextColor(color)
+end
+end
+--========================================================================================================
+function bcolor(c)
+if c == nil then
+    term.setBackgroundColor(colors.white)
+else
+    local color = colors[c] or c
+    term.setBackgroundColor(color)
+end
+end
+--========================================================================================================
+function clear()
+  term.clear()
+end
+--========================================================================================================
+function cursorpos(x, y)
+  if x == nil or y == nil then
+  term.setCursorPos(1, 1)
+  else
+  term.setCursorPos(x, y)
+end
+end
+--========================================================================================================
+function reset()
+    term.clear()
+    term.setCursorPos(1,1)
+end
+--========================================================================================================
+function cwrite(msg, c)
+tcolor(c)
+term.write(msg)
+tcolor()
+end
+--========================================================================================================
+function cprint(msg, c)
+tcolor(c)
+print(msg)
+tcolor()
+end
+--========================================================================================================
+function pwrap(side)
+return peripheral.wrap(side)
+end
+--========================================================================================================
+function redinput(side)
+return redstone.getInput(side)
+end
+--========================================================================================================
+function redoutput(side, b)
+redstone.setOutput(side, b)
+end
+--========================================================================================================
+function ping(actON, actOFF)
+local f1 = load(actON)
+local f2 = load(actOFF)
+while true do
+
+sender, data = rednet.receive(1)
+if sender then
+ if actON == nil then
+ return true
+ else
+ reset()
+ f1()
+ end
+lastping = os.clock()
+end
+
+if os.clock() - lastping > 0.5 then
+ if actOFF ~= nil then
+ reset()
+ f2()
+ end
+end
+sleep(0.5)
+end
+end
+--========================================================================================================
+function pressed(k)
+ while true do
+  local event, key, is_held = os.pullEvent("key")
+  local keyname = keys.getName(key)
+
+  if keyname == k then 
+   return true
+   end
+  end
+end
+--========================================================================================================
+function constant(time, cmd)
+    local c = load(cmd)
+    local running = true
+
+    while running do
+        c()
+       
+        local t = os.startTimer(time)
+        while true do
+            local event, p1 = os.pullEvent()
+            if event == "timer" and p1 == t then 
+                break 
+            elseif event == "key" and keys.getName(p1) == "leftCtrl" then
+                running = false 
+                break
+            end
+        end
+    end
+end
+
+
+
+
+------------------------------------------------ Tables
+
+function insert(tab, v)
+table.insert(tab, v) 
+end
+
+function remove(tab, v)
+table.remove(tab, v)
+end
+
+function concat(tab, plus)
+if plus == nil then
+table.concat(tab)
+else
+table.concat(tab, plus)
+end
+end
+
+function checkintab(t, val)
+for i, v in ipairs(t) do 
+return v == val
+end
+end
+
+
+
+
+function printtab(t, ttype, tag)
+local info = debug.getinfo(2, "Sl")
+local line = info.currentline
+
+if t == nil then
+insert(errortable, line..": Error -- table not specified (>T<, type, order)")
+end
+
+if ttype == nil then
+insert(errortable, line..": Error -- type not specified (t, >TYPE<, order)")
+insert(errortable, "Types -- array / key")
+end
+
+if type(order) == "string" then
+insert(errortable, line..": Error -- expected boolean (t, type, >ORDER<)")
+end
+
+if ttype == "array" then
+for i, v in ipairs(t) do
+  if tag then
+    print(i..". "..v)
+    else
+    print(v)
+    end
+end
+end
+
+if ttype == "key" then
+for k, v in pairs(t) do
+  if tag then
+    print(k..": "..v)
+    else
+    print(v)
+    end
+end
+end
+end
+
+
+
+helpcommands = {
+"> printerror() --- prints any detected error.",
+"> tcolor(c) --- sets text color.",
+"> bcolor(c) --- sets background color.",
+"> clear() --- clears everything.",
+"> cursorpos(x, y) --- set the cursor position.", 
+"> reset() --- executes clear() and cursorpos(1, 1).",
+"> cwrite(txt, c) --- writes a text with color.",
+"> cprint(txt, c) --- prints a text with color.",
+"> pwrap(side) --- wraps a peripheral.",
+"> redinput(side) --- returns a redstone input.",
+"> redoutput(side, b) --- executes redstone.setOutput.",
+"> ping(actOFF, actON) --- reacts to a received value (rednet.receive()) and executes commands if any sort of information is being or not received.",
+"> pressed(k) --- returns true if a key is pressed.",
+"> constant(time, cmd) --- constantly executes a command after x time is passed.",
+"",
+"> insert(tab, v) --- inserts a value into a table.",
+"> remove(tab, v) --- removes a value of a table.",
+"> concat(tab, plus) --- concatenates a table. Can have a complement to the command.",
+"> checkintab(tab, v) --- returns true if a value exists inside a table.",
+"> printtab(t, ttype, tag) --- prints tables according to their type (array or key) with or not the value's position in the table (tag)"
+}
+
+
+
+
+
