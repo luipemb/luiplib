@@ -215,8 +215,9 @@ end
 
 
 helpcommands = {
+"==================================",
 "Desc: OptLib offers a pack of shortcuts for commands that are unnecessarily long.",
-"",
+"==================================",
 "> printerror() --- prints any detected error.",
 "> tcolor(c) --- sets text color.",
 "> bcolor(c) --- sets background color.",
@@ -231,12 +232,13 @@ helpcommands = {
 "> ping(actOFF, actON) --- reacts to a received value (rednet.receive()) and executes commands if any sort of information is being or not received.",
 "> pressed(k) --- returns true if a key is pressed.",
 "> constant(time, cmd) --- constantly executes a command after x time is passed.",
-"",
+"==================================",
 "> insert(tab, v) --- inserts a value into a table.",
 "> remove(tab, v) --- removes a value of a table.",
 "> concat(tab, plus) --- concatenates a table. Can have a complement to the command.",
 "> checkintab(tab, v) --- returns true if a value exists inside a table.",
-"> printtab(t, ttype, tag) --- prints tables according to their type (array or key) with or not the value's position in the table (tag)"
+"> printtab(t, ttype, tag) --- prints tables according to their type (array or key) with or not the value's position in the table (tag)",
+"=================================="
 }
 
 
