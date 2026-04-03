@@ -1,4 +1,4 @@
-vers = "ex7"
+vers = "ex8"
 local created = 0
 
 function cstring(c, string)
@@ -13,7 +13,7 @@ function csprint(st)
     print(st[1])
     term.setTextColor(colors.white)
   elseif string.find(st, "_@CSTRING@") then
-    local Nst = string.gsub(st, "_@CSTRING@", "")
+    local Nst = _G[string.gsub(st, "_@CSTRING@", "")]
     term.setTextColor(colors[Nst[2]])
     print(Nst[1])
     term.setTextColor(colors.white)
