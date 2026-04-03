@@ -3,7 +3,6 @@ local oldprint = print
 
 
 function cstring(c, string)
-  created = created + 1
   _G[string] = {string, c}    
   return "@CSTRING_"..string.."_CSTRING@"
 end
