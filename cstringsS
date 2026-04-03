@@ -1,9 +1,9 @@
-vers = "ex1"
+vers = "ex2"
 local created = 0
 
 function cstring(c, string)
   created = created + 1
-  string = {string, c}
+  _G[string] = {string, c}      
 end
 
 function csprint(string)
