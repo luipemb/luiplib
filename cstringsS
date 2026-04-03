@@ -1,4 +1,4 @@
-vers = "ex12"
+vers = "ex13"
 local created = 0
 
 function cstring(c, string)
@@ -22,9 +22,9 @@ function csprint(st)
       term.write(Nst[1])
       term.setTextColor(colors.white)
       term.write(after)
-    end
-  else
+    else
     print(st)
   end
+end
 end
   
