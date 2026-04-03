@@ -7,17 +7,20 @@ function cstring(c, s_name)
 end
 
 function print(st)
-  -- Criamos uma função interna
-  local function execute_logic(data)
-    if type(data) == "table" then
-      term.setTextColor(colors[data[2]] or colors.white)
-      oldprint(data[1])
+  local function process()
+    if type(st) == "table" then
+      term.setTextColor(colors[st[2]] or colors.white)
+      oldprint(st[1])
       term.setTextColor(colors.white)
-    elseif type(data) == "string" then
+      return
+    end
+
+    if type(st) == "string" then
       local lastpos = 1
       local found = false
-      for before, name in data:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
+      for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
         found = true
+        term.setTextColor(colors.white)
         term.write(before)
         local Nst = _G[name]
         if Nst then
@@ -27,25 +30,24 @@ function print(st)
         else
           term.write("@CSTRING_"..name.."_CSTRING@")
         end
-        local _, endpos = data:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
+        local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
         lastpos = endpos + 1
       end
+
       if found then
-        term.write(data:sub(lastpos))
+        term.setTextColor(colors.white)
+        term.write(st:sub(lastpos))
         oldprint("")
       else
-        oldprint(data)
+        oldprint(st)
       end
     else
-      oldprint(data)
+      oldprint(st)
     end
   end
 
-  -- Chamamos a lógica, mas NÃO retornamos o resultado dela
-  execute_logic(st)
-  
-  -- Explicitamente não retorna nada
-  return 
+  process()
+  if false then return nil end 
 end
 
 helpcommands = {
