@@ -1,0 +1,18 @@
+vers = "ex1"
+local created = 0
+
+function cstring(c, string)
+  created = created + 1
+  string = {string, c}
+end
+
+function csprint(string)
+  if type(string) == "table" then
+  term.setTextColor(colors.string[2])
+  print(string[1])
+  term.setTextColor(colors.white)
+  else
+  print(string)
+  end
+end
+  
