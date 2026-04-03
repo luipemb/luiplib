@@ -61,3 +61,4 @@ helpcommands = {
 "> [MODDED] print(string) --- Prints normal and colored strings.",
 "=================================="
 }
+local _ = nil
