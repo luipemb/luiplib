@@ -1,4 +1,4 @@
-vers = "ex14"
+vers = "ex15"
 local created = 0
 
 function cstring(c, string)
@@ -25,6 +25,7 @@ function csprint(st)
       if Nst then
         term.setTextColor(colors[Nst[2]])
         term.write(Nst[1])
+      end
 
       local _, endpos = st:find("@CSTRING_"..string_name.."_CSTRING@", lastpos, true)
       lastpos = endpos + 1
