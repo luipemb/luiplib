@@ -1,4 +1,4 @@
-vers = "ex13"
+vers = "ex14"
 local created = 0
 
 function cstring(c, string)
@@ -13,18 +13,32 @@ function csprint(st)
     print(st[1])
     term.setTextColor(colors.white)
   elseif type(st) == "string" then
-    local Nst = _G[string.match(st, "@CSTRING_(.-)_CSTRING@")]
-    if Nst then
-      local before = string.match(st, "^(.-)@CSTRING_")
-      local after = string.match(st, "_CSTRING@(.*)$")
-      term.write(before)
-      term.setTextColor(colors[Nst[2]])
-      term.write(Nst[1])
+    local lastpos = 1
+    local found = false
+
+    for before, string_name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
+      found = true
       term.setTextColor(colors.white)
+      term.write(before)
+
+      local Nst = _G[string_name]
+      if Nst then
+        term.setTextColor(colors[Nst[2]])
+        term.write(Nst[1])
+
+      local _, endpos = st:find("@CSTRING_"..string_name.."_CSTRING@", lastpos, true)
+      lastpos = endpos + 1
+    end
+
+    if found then
+      term.setTextColor(colors.white)
+      local after = st:sub(lastpos)
       term.write(after)
+      print("")
     else
+      print(st)
+    end
+  else
     print(st)
   end
 end
-end
-  
