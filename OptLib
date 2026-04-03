@@ -215,6 +215,8 @@ end
 
 
 helpcommands = {
+"Desc: OptLib offers a pack of shortcuts for commands that are unnecessarily long.",
+"",
 "> printerror() --- prints any detected error.",
 "> tcolor(c) --- sets text color.",
 "> bcolor(c) --- sets background color.",
