@@ -1,4 +1,4 @@
-vers = "ex2"
+vers = "ex3"
 local created = 0
 
 function cstring(c, string)
@@ -8,7 +8,7 @@ end
 
 function csprint(string)
   if type(string) == "table" then
-  term.setTextColor(colors.string[2])
+  term.setTextColor(colors[string[2]])
   print(string[1])
   term.setTextColor(colors.white)
   else
