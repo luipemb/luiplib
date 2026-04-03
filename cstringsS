@@ -1,6 +1,6 @@
-vers = "ex16"
+vers = "ex17"
 local created = 0
-local oldPrint = print
+local oldprint = print
 
 
 function cstring(c, string)
@@ -12,7 +12,7 @@ end
 function print(st)
   if type(st) == "table" then
     term.setTextColor(colors[st[2]])
-    print(st[1])
+    oldprint(st[1])
     term.setTextColor(colors.white)
   elseif type(st) == "string" then
     local lastpos = 1
@@ -37,11 +37,11 @@ function print(st)
       term.setTextColor(colors.white)
       local after = st:sub(lastpos)
       term.write(after)
-      print("")
+      oldprint("")
     else
-      print(st)
+      oldprint(st)
     end
   else
-    print(st)
+    oldprint(st)
   end
 end
