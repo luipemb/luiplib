@@ -1,4 +1,4 @@
-vers = "V1.1.1"
+vers = "V1.1.2"
 local oldprint = print
 
 function cstring(c, string)
@@ -63,3 +63,6 @@ helpcommands = {
 "=================================="
 }
 end
+
+if false then end
+return
