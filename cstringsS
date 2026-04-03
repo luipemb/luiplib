@@ -13,7 +13,7 @@ function csprint(st)
     print(st[1])
     term.setTextColor(colors.white)
   elseif type(st) == "string" then
-    local Nst = string.match(st, "@CSTRING_(.-)_CSTRING@")  
+    local Nst = _G[string.match(st, "@CSTRING_(.-)_CSTRING@")]
     if Nst then
       local before = string.match(st, "^(.-)@CSTRING_")
       local after = string.match(st, "_CSTRING@(.*)$")
