@@ -1,4 +1,4 @@
-vers = "ex11"
+vers = "ex12"
 local created = 0
 
 function cstring(c, string)
@@ -17,11 +17,11 @@ function csprint(st)
     if Nst then
       local before = string.match(st, "^(.-)@CSTRING_")
       local after = string.match(st, "_CSTRING@(.*)$")
-      term.setTextColor(colors[Nst[2]])
       term.write(before)
+      term.setTextColor(colors[Nst[2]])
       term.write(Nst[1])
-      term.write(after)
       term.setTextColor(colors.white)
+      term.write(after)
     end
   else
     print(st)
