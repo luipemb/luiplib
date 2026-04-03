@@ -1,5 +1,4 @@
 vers = "V1.0"
-local created = 0
 local oldprint = print
 
 
@@ -45,3 +44,13 @@ function print(st)
     oldprint(st)
   end
 end
+
+
+
+
+helpcommands = {
+"Desc: With "..cstring("blue", "BetterStrings ").."you are now able to create colorful strings and use them anywhere (even index tables!).",
+"",
+"> cstring(c, string) --- Creates a printable colored string.",
+"> [MODDED] print(string) --- Prints normal and colored strings."
+}
