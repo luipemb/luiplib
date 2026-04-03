@@ -1,19 +1,24 @@
-vers = "ex4"
+vers = "ex5"
 local created = 0
 
 function cstring(c, string)
   created = created + 1
   _G[string] = {string, c}    
-  return string
+  return string.."_@CSTRING@"
 end
 
-function csprint(string)
-  if type(string) == "table" then
-  term.setTextColor(colors[string[2]])
-  print(string[1])
-  term.setTextColor(colors.white)
+function csprint(st)
+  if type(st) == "table" then
+    term.setTextColor(colors[st[2]])
+    print(st[1])
+    term.setTextColor(colors.white)
+  elseif string.find(st, "_@CSTRING@" then
+    local Nst = string.gsub(st, "_@CSTRING@")
+    term.setTextColor(colors[Nst[2]])
+    print(Nst[1])
+    term.setTextColor(colors.white)
   else
-  print(string)
+    print(st)
   end
 end
   
