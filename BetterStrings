@@ -10,7 +10,7 @@ function print(st)
   -- Se o print for chamado vazio: print()
   if st == nil then 
     oldprint()
-    return -- Sai sem retornar valor
+    return
   end
 
   local function process()
@@ -47,8 +47,6 @@ function print(st)
   end
 
   process()
-  -- O SEGREDO: Não colocar nada aqui faz a função retornar "void" (vazio)
-  -- Isso impede que o shell imprima 'nil'
 end
 
 helpcommands = {
