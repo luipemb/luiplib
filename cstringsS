@@ -1,4 +1,4 @@
-vers = "ex8"
+vers = "ex9"
 local created = 0
 
 function cstring(c, string)
