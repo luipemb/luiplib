@@ -3,7 +3,8 @@ local created = 0
 
 function cstring(c, string)
   created = created + 1
-  _G[string] = {string, c}      
+  _G[string] = {string, c}    
+  return string
 end
 
 function csprint(string)
