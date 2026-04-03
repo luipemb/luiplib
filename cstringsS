@@ -1,5 +1,7 @@
-vers = "ex15"
+vers = "ex16"
 local created = 0
+local oldPrint = print
+
 
 function cstring(c, string)
   created = created + 1
@@ -7,7 +9,7 @@ function cstring(c, string)
   return "@CSTRING_"..string.."_CSTRING@"
 end
 
-function csprint(st)
+function print(st)
   if type(st) == "table" then
     term.setTextColor(colors[st[2]])
     print(st[1])
