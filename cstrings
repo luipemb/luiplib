@@ -1,4 +1,4 @@
-vers = "ex17"
+vers = "V1.0"
 local created = 0
 local oldprint = print
 
