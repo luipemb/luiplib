@@ -7,20 +7,22 @@ function cstring(c, s_name)
 end
 
 function print(st)
+  -- Se o print for chamado vazio: print()
+  if st == nil then 
+    oldprint()
+    return -- Sai sem retornar valor
+  end
+
   local function process()
     if type(st) == "table" then
       term.setTextColor(colors[st[2]] or colors.white)
       oldprint(st[1])
       term.setTextColor(colors.white)
-      return
-    end
-
-    if type(st) == "string" then
+    elseif type(st) == "string" then
       local lastpos = 1
       local found = false
       for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
         found = true
-        term.setTextColor(colors.white)
         term.write(before)
         local Nst = _G[name]
         if Nst then
@@ -33,9 +35,7 @@ function print(st)
         local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
         lastpos = endpos + 1
       end
-
       if found then
-        term.setTextColor(colors.white)
         term.write(st:sub(lastpos))
         oldprint("")
       else
@@ -47,12 +47,13 @@ function print(st)
   end
 
   process()
-  if false then return nil end 
+  -- O SEGREDO: Não colocar nada aqui faz a função retornar "void" (vazio)
+  -- Isso impede que o shell imprima 'nil'
 end
 
 helpcommands = {
 "==================================",
-"Desc: With BetterStrings you are now able to create colorful strings and use them anywhere (even index tables!).",
+"Desc: BetterStrings V1.1.4",
 "==================================",
 "> cstring(c, string) --- Creates a printable colored string.",
 "> [MODDED] print(string) --- Prints normal and colored strings.",
