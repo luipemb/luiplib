@@ -1,4 +1,4 @@
-vers = "V1.1.6"
+vers = "V1.1.7"
 local oldprint = print
 
 function cstring(c, s_name)
@@ -7,6 +7,7 @@ function cstring(c, s_name)
 end
 
 function print(st)
+local originalC = term.getTextColor()
   if st == nil then 
     oldprint()
     return
@@ -16,7 +17,7 @@ function print(st)
     if type(st) == "table" then
       term.setTextColor(colors[st[2]] or colors.white)
       oldprint(st[1])
-      term.setTextColor(colors.white)
+      term.setTextColor(originalC)
     elseif type(st) == "string" then
       local lastpos = 1
       local found = false
@@ -27,7 +28,7 @@ function print(st)
         if Nst then
           term.setTextColor(colors[Nst[2]] or colors.white)
           term.write(Nst[1])
-          term.setTextColor(colors.white)
+          term.setTextColor(originalC)
         else
           term.write("@CSTRING_"..name.."_CSTRING@")
         end
