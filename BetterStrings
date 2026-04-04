@@ -1,13 +1,12 @@
-vers = "V1.1.5"
+vers = "V1.1.6"
 local oldprint = print
 
 function cstring(c, s_name)
   _G[s_name] = {s_name, c}    
-  return "@CSTRING_"..s_name.."_CSTRING@"
+  return "@CSTRING_"..tostring(s_name).."_CSTRING@"
 end
 
 function print(st)
-  -- Se o print for chamado vazio: print()
   if st == nil then 
     oldprint()
     return
