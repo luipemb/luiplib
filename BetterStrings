@@ -1,6 +1,6 @@
-vers = "V1.2ex7"
+evers = "V1.2ex8"
 local oldprint = print
-local oldwrite = write
+local oldwrite = term.write
 
 function cstring(c, s_name)
   _G[s_name] = {s_name, c}    
