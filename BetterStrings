@@ -1,4 +1,4 @@
-vers = "V1.2ex"
+vers = "V1.2ex2"
 local oldprint = print
 
 function cstring(c, s_name)
@@ -51,7 +51,8 @@ end
 -------------------------------Cinematics--------------------------------------------------
 
 function typewrite(string, time)
-t = time/string:gsub("@CSTRING_(.-)_CSTRING@", "")
+local clearst = string:gsub("@CSTRING_(.-)_CSTRING@", "")
+t = time/#clearst
   for char in string:gmatch(".") do
     term.write(char)
     os.sleep(t)
