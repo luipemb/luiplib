@@ -1,4 +1,4 @@
-vers = "V1.2ex5"
+vers = "V1.2ex6"
 local oldprint = print
 local oldwrite = write
 
@@ -24,20 +24,20 @@ local originalC = term.getTextColor()
       local found = false
       for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
         found = true
-        term.write(before)
+        oldwrite(before)
         local Nst = _G[name]
         if Nst then
           term.setTextColor(colors[Nst[2]] or colors.white)
-          term.write(Nst[1])
+          oldwrite(Nst[1])
           term.setTextColor(originalC)
         else
-          term.write("@CSTRING_"..name.."_CSTRING@")
+          oldwrite("@CSTRING_"..name.."_CSTRING@")
         end
         local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
         lastpos = endpos + 1
       end
       if found then
-        term.write(st:sub(lastpos))
+        oldwrite(st:sub(lastpos))
         oldprint("")
       else
         oldprint(st)
@@ -56,6 +56,7 @@ end
 
 
 
+
 -------------------------------Cinematics--------------------------------------------------
 
 function typewrite(string, time)
@@ -67,7 +68,7 @@ end
 
 t = time/#clearst
   for char in string:gmatch(".") do
-    term.write(char)
+    oldwrite(char)
     os.sleep(t)
     end
 end
