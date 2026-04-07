@@ -1,4 +1,4 @@
-vers = "V1.1.7"
+vers = "V1.2ex"
 local oldprint = print
 
 function cstring(c, s_name)
@@ -48,6 +48,17 @@ local originalC = term.getTextColor()
 
   process()
 end
+-------------------------------Cinematics--------------------------------------------------
+
+function typewrite(string, time)
+t = time/string:gsub("@CSTRING_(.-)_CSTRING@", "")
+  for char in string:gmatch(".") do
+    term.write(char)
+    os.sleep(t)
+    end
+end
+
+
 
 helpcommands = {
 "==================================",
