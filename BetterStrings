@@ -1,6 +1,8 @@
-vers = "V1.2ex16"
+vers = "V1.2ex17"
 local oldprint = print
-local oldwrite = term.write
+
+-- AQUI ESTAVA O MEU ERRO: Tem que ser 'write' puro, sem o 'term.'
+local oldwrite = write 
 
 function cstring(c, s_name)
   _G[s_name] = {s_name, c}    
@@ -41,9 +43,7 @@ function print(st)
       
       if found then
         oldwrite(st:sub(lastpos))
-        -- AQUI: Em vez de oldprint(""), usamos o oldprint vazio do sistema
-        -- para garantir que o cursor desça uma linha inteira
-        oldprint() 
+        oldprint() -- Agora isso aqui vai funcionar e pular a linha
       else
         oldprint(st)
       end
@@ -94,7 +94,7 @@ _G.write = function(st)
   end
 
   process()
-  return 0 -- Mantido para evitar erro na BIOS linha 129
+  return 0 
 end
 
 -------------------------------Cinematics--------------------------------------------------
@@ -110,7 +110,7 @@ function typewrite(string, time)
     oldwrite(char)
     os.sleep(t)
   end
-  oldprint() -- Adicionado para pular linha após terminar a animação
+  oldprint() 
 end
 
 helpcommands = {
