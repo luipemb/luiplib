@@ -1,5 +1,7 @@
-vers = "V1.1.7"
+vers = "V1.2"
 local oldprint = print
+
+local oldwrite = write 
 
 function cstring(c, s_name)
   _G[s_name] = {s_name, c}    
@@ -7,7 +9,7 @@ function cstring(c, s_name)
 end
 
 function print(st)
-local originalC = term.getTextColor()
+  local originalC = term.getTextColor()
   if st == nil then 
     oldprint()
     return
@@ -23,21 +25,24 @@ local originalC = term.getTextColor()
       local found = false
       for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
         found = true
-        term.write(before)
+        oldwrite(before)
         local Nst = _G[name]
         if Nst then
           term.setTextColor(colors[Nst[2]] or colors.white)
-          term.write(Nst[1])
+          oldwrite(Nst[1])
           term.setTextColor(originalC)
         else
-          term.write("@CSTRING_"..name.."_CSTRING@")
+          oldwrite("@CSTRING_"..name.."_CSTRING@")
         end
         local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
-        lastpos = endpos + 1
+        if endpos then
+            lastpos = endpos + 1
+        end
       end
+      
       if found then
-        term.write(st:sub(lastpos))
-        oldprint("")
+        oldwrite(st:sub(lastpos))
+        oldprint() -- Agora isso aqui vai funcionar e pular a linha
       else
         oldprint(st)
       end
@@ -49,11 +54,123 @@ local originalC = term.getTextColor()
   process()
 end
 
+_G.write = function(st)
+  local originalC = term.getTextColor()
+  if st == nil then return 0 end
+
+  local function process()
+    if type(st) == "table" then
+      term.setTextColor(colors[st[2]] or colors.white)
+      oldwrite(st[1])
+      term.setTextColor(originalC)
+    elseif type(st) == "string" then
+      local lastpos = 1
+      local found = false
+      for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
+        found = true
+        oldwrite(before)
+        local Nst = _G[name]
+        if Nst then
+          term.setTextColor(colors[Nst[2]] or colors.white)
+          oldwrite(Nst[1])
+          term.setTextColor(originalC)
+        else
+          oldwrite("@CSTRING_"..name.."_CSTRING@")
+        end
+        local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
+        if endpos then
+            lastpos = endpos + 1
+        end
+      end
+      if found then
+        oldwrite(st:sub(lastpos))
+      else
+        oldwrite(st)
+      end
+    else
+      oldwrite(tostring(st))
+    end
+  end
+
+  process()
+  return 0 
+end
+
+-------------------------------Cinematics--------------------------------------------------
+
+function typewrite(st, time)
+  if st == nil then return end
+  st = tostring(st) 
+
+ 
+  local clearst = st:gsub("@CSTRING_(.-)_CSTRING@", function(name)
+    local Nst = _G[name]
+    if Nst then
+      return tostring(Nst[1])
+    else
+      return "" 
+    end
+  end)
+  
+  local t_time = time or 0.25 
+  
+  local len = #clearst
+  if len == 0 then len = 1 end 
+  local t = t_time / len 
+
+  local originalC = term.getTextColor()
+
+  local function animate(text)
+    for char in text:gmatch(".") do
+      oldwrite(char)
+      os.sleep(t)
+    end
+  end
+
+  local lastpos = 1
+  local found = false
+  
+  for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
+    found = true
+    animate(before)
+    
+    local Nst = _G[name]
+    if Nst then
+      term.setTextColor(colors[Nst[2]] or colors.white)
+      animate(tostring(Nst[1]))
+      term.setTextColor(originalC)
+    else
+      animate("@CSTRING_"..name.."_CSTRING@")
+    end
+    
+    local tag = "@CSTRING_"..name.."_CSTRING@"
+    local _, endpos = st:find(tag, lastpos, true)
+    
+    if endpos ~= nil then
+        lastpos = endpos + 1
+    else
+        lastpos = lastpos + #before + #tag
+    end
+  end
+
+  if found then
+    if lastpos <= #st then
+      animate(st:sub(lastpos))
+    end
+  else
+    animate(st)
+  end
+
+end
+
+
 helpcommands = {
 "==================================",
-"Desc: BetterStrings V1.1.4",
+"Desc: You can now write strings with color incorporated to them! Create a table with a cstring and then print the table, and see the colored value!",
 "==================================",
 "> cstring(c, string) --- Creates a printable colored string.",
 "> [MODDED] print(string) --- Prints normal and colored strings.",
+"> [MODDED] write(string) --- Writes normal and colored strings.",
+"> typewrite(string, time) --- Animated text.",
 "=================================="
 }
