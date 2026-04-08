@@ -1,4 +1,4 @@
-evers = "V1.2ex9"
+vers = "V1.2ex10"
 local oldprint = print
 local oldwrite = term.write
 
@@ -33,8 +33,11 @@ local originalC = term.getTextColor()
         else
           oldwrite("@CSTRING_"..name.."_CSTRING@")
         end
+        -- Correcao: Adicionado o 'true' e o IF para evitar erro de nil
         local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
-        lastpos = endpos + 1
+        if endpos then
+            lastpos = endpos + 1
+        end
       end
       if found then
         oldwrite(st:sub(lastpos))
@@ -53,7 +56,7 @@ end
 _G.write = function(st)
 local originalC = term.getTextColor()
   if st == nil then 
-    oldwrite()
+    oldwrite("") 
     return
   end
 
@@ -76,8 +79,11 @@ local originalC = term.getTextColor()
         else
           oldwrite("@CSTRING_"..name.."_CSTRING@")
         end
+        -- Correcao: Adicionado o 'true' e o IF para evitar erro de nil
         local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
-        lastpos = endpos + 1
+        if endpos then
+            lastpos = endpos + 1
+        end
       end
       if found then
         oldwrite(st:sub(lastpos))
@@ -92,38 +98,26 @@ local originalC = term.getTextColor()
   process()
 end
 
-
-
-
-
-
-
-
-
-
 -------------------------------Cinematics--------------------------------------------------
 
 function typewrite(string, time)
 local clearst = string:gsub("@CSTRING_(.-)_CSTRING@", "")
 
-if time == nil then
-local time = 0.25
-end
+local time = time or 0.25 
 
-t = time/#clearst
+local t = time/#clearst
   for char in string:gmatch(".") do
     oldwrite(char)
     os.sleep(t)
     end
 end
 
-
-
 helpcommands = {
 "==================================",
-"Desc: BetterStrings V1.1.4",
+"Desc: BetterStrings " .. vers,
 "==================================",
 "> cstring(c, string) --- Creates a printable colored string.",
 "> [MODDED] print(string) --- Prints normal and colored strings.",
+"> typewrite(string, time) --- Animated text.",
 "=================================="
 }
