@@ -99,48 +99,48 @@ end
 
 -------------------------------Cinematics--------------------------------------------------
 
--------------------------------Cinematics--------------------------------------------------
-
 function typewrite(st, time)
   if st == nil then return end
-  st = tostring(st) -- Prevenção caso passem um número
+  st = tostring(st) 
 
+  -- O SEGREDO ESTÁ AQUI: Em vez de "", pedimos pro gsub devolver a palavra real!
+  local clearst = st:gsub("@CSTRING_(.-)_CSTRING@", function(name)
+    local Nst = _G[name]
+    if Nst then
+      return tostring(Nst[1]) -- Devolve a palavra real (ex: "Mundo") para a contagem
+    else
+      return "" 
+    end
+  end)
   
-  local clearst = st:gsub("@CSTRING_(.-)_CSTRING@", "")
   local t_time = time or 0.25 
   
   local len = #clearst
   if len == 0 then len = 1 end 
-  local t = t_time / len
+  local t = t_time / len -- Agora a divisão é perfeita!
 
   local originalC = term.getTextColor()
 
-  
   local function animate(text)
     for char in text:gmatch(".") do
-      oldwrite(char) -- Usamos oldwrite para não reprocessar tags letra por letra
+      oldwrite(char)
       os.sleep(t)
     end
   end
-
 
   local lastpos = 1
   local found = false
   
   for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
     found = true
-    
-
     animate(before)
     
     local Nst = _G[name]
     if Nst then
-
       term.setTextColor(colors[Nst[2]] or colors.white)
       animate(tostring(Nst[1]))
       term.setTextColor(originalC)
     else
-
       animate("@CSTRING_"..name.."_CSTRING@")
     end
     
@@ -162,8 +162,8 @@ function typewrite(st, time)
     animate(st)
   end
 
+  oldprint() 
 end
-
 
 
 helpcommands = {
