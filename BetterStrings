@@ -1,4 +1,4 @@
-evers = "V1.2ex8"
+evers = "V1.2ex9"
 local oldprint = print
 local oldwrite = term.write
 
@@ -50,7 +50,7 @@ local originalC = term.getTextColor()
   process()
 end
 
-function write(st)
+_G.write = function(st)
 local originalC = term.getTextColor()
   if st == nil then 
     oldwrite()
@@ -91,6 +91,7 @@ local originalC = term.getTextColor()
 
   process()
 end
+
 
 
 
