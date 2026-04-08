@@ -1,4 +1,4 @@
-vers = "V1.2ex13"
+vers = "V1.2ex14"
 local oldprint = print
 local oldwrite = term.write
 
@@ -63,58 +63,6 @@ function print(st)
   process()
 end
 
-_G.write = function(st)
-  local originalC = term.getTextColor()
-  if st == nil then 
-    oldwrite("") 
-    return
-  end
-
-  local function process()
-    if type(st) == "table" then
-      term.setTextColor(colors[st[2]] or colors.white)
-      oldwrite(st[1])
-      term.setTextColor(originalC)
-    elseif type(st) == "string" then
-      local lastpos = 1
-      local found = false
-      for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
-        found = true
-        oldwrite(before)
-        local Nst = _G[name]
-        if Nst then
-          term.setTextColor(colors[Nst[2]] or colors.white)
-          oldwrite(Nst[1])
-          term.setTextColor(originalC)
-        else
-          oldwrite("@CSTRING_"..name.."_CSTRING@")
-        end
-        
-        -- BUSCA BLINDADA
-        local tag = "@CSTRING_"..name.."_CSTRING@"
-        local _, endpos = st:find(tag, lastpos, true)
-        
-        if endpos ~= nil then
-            lastpos = endpos + 1
-        else
-            lastpos = lastpos + #before + #tag
-        end
-      end
-
-      if found then
-        if lastpos <= #st then
-          oldwrite(st:sub(lastpos))
-        end
-      else
-        oldwrite(st)
-      end
-    else
-      oldwrite(tostring(st))
-    end
-  end
-
-  process()
-end
 
 -------------------------------Cinematics--------------------------------------------------
 
