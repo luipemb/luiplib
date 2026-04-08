@@ -1,7 +1,6 @@
-vers = "V1.2ex24"
+vers = "V1.2"
 local oldprint = print
 
--- AQUI ESTAVA O MEU ERRO: Tem que ser 'write' puro, sem o 'term.'
 local oldwrite = write 
 
 function cstring(c, s_name)
@@ -103,11 +102,11 @@ function typewrite(st, time)
   if st == nil then return end
   st = tostring(st) 
 
-  -- O SEGREDO ESTÁ AQUI: Em vez de "", pedimos pro gsub devolver a palavra real!
+ 
   local clearst = st:gsub("@CSTRING_(.-)_CSTRING@", function(name)
     local Nst = _G[name]
     if Nst then
-      return tostring(Nst[1]) -- Devolve a palavra real (ex: "Mundo") para a contagem
+      return tostring(Nst[1])
     else
       return "" 
     end
@@ -117,7 +116,7 @@ function typewrite(st, time)
   
   local len = #clearst
   if len == 0 then len = 1 end 
-  local t = t_time / len -- Agora a divisão é perfeita!
+  local t = t_time / len 
 
   local originalC = term.getTextColor()
 
@@ -167,10 +166,11 @@ end
 
 helpcommands = {
 "==================================",
-"Desc: BetterStrings " .. vers,
+"Desc: You can now write strings with color incorporated to them! Create a table with a cstring and then print the table, and see the colored value!",
 "==================================",
 "> cstring(c, string) --- Creates a printable colored string.",
 "> [MODDED] print(string) --- Prints normal and colored strings.",
+"> [MODDED] write(string) --- Writes normal and colored strings.",
 "> typewrite(string, time) --- Animated text.",
 "=================================="
 }
