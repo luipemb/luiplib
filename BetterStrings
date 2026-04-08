@@ -1,4 +1,4 @@
-vers = "V1.2ex19"
+vers = "V1.2ex20"
 local oldprint = print
 
 -- AQUI ESTAVA O MEU ERRO: Tem que ser 'write' puro, sem o 'term.'
@@ -109,7 +109,8 @@ function typewrite(st, time)
   local t = t_time / len
 
   for char in st:gmatch(".") do
-    write(char)
+    term.setTextColor(colors[st[2]])
+    write(char:gsub("@CSTRING_(.-)_CSTRING@", ""))
     os.sleep(t)
   end 
 end
