@@ -1,4 +1,4 @@
-vers = "V1.2ex22"
+vers = "V1.2ex23"
 local oldprint = print
 
 -- AQUI ESTAVA O MEU ERRO: Tem que ser 'write' puro, sem o 'term.'
