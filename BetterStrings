@@ -1,4 +1,4 @@
-vers = "V1.2ex12"
+vers = "V1.2ex13"
 local oldprint = print
 local oldwrite = term.write
 
@@ -33,13 +33,24 @@ function print(st)
         else
           oldwrite("@CSTRING_"..name.."_CSTRING@")
         end
-        local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
-        if endpos then
+        
+        -- BUSCA BLINDADA
+        local tag = "@CSTRING_"..name.."_CSTRING@"
+        local _, endpos = st:find(tag, lastpos, true)
+        
+        if endpos ~= nil then
             lastpos = endpos + 1
+        else
+            -- Se nao achou a tag (erro de nil), pula o tamanho manual da tag
+            lastpos = lastpos + #before + #tag
         end
       end
+
       if found then
-        oldwrite(st:sub(lastpos))
+        -- Evita erro de sub se o lastpos ficou maior que a string
+        if lastpos <= #st then
+          oldwrite(st:sub(lastpos))
+        end
         oldprint("")
       else
         oldprint(st)
@@ -78,13 +89,22 @@ _G.write = function(st)
         else
           oldwrite("@CSTRING_"..name.."_CSTRING@")
         end
-        local _, endpos = st:find("@CSTRING_"..name.."_CSTRING@", lastpos, true)
-        if endpos then
+        
+        -- BUSCA BLINDADA
+        local tag = "@CSTRING_"..name.."_CSTRING@"
+        local _, endpos = st:find(tag, lastpos, true)
+        
+        if endpos ~= nil then
             lastpos = endpos + 1
+        else
+            lastpos = lastpos + #before + #tag
         end
       end
+
       if found then
-        oldwrite(st:sub(lastpos))
+        if lastpos <= #st then
+          oldwrite(st:sub(lastpos))
+        end
       else
         oldwrite(st)
       end
@@ -102,9 +122,8 @@ function typewrite(string, time)
   local clearst = string:gsub("@CSTRING_(.-)_CSTRING@", "")
   local t_time = time or 0.25
   
-  -- Prevenção de erro de aritmética:
   local divisor = #clearst
-  if divisor == 0 then divisor = 1 end
+  if divisor <= 0 then divisor = 1 end
   
   local t = t_time / divisor
   
