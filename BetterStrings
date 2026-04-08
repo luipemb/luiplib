@@ -1,4 +1,4 @@
-vers = "V1.2ex20"
+vers = "V1.2ex21"
 local oldprint = print
 
 -- AQUI ESTAVA O MEU ERRO: Tem que ser 'write' puro, sem o 'term.'
@@ -99,20 +99,70 @@ end
 
 -------------------------------Cinematics--------------------------------------------------
 
-function typewrite(st, time) 
+-------------------------------Cinematics--------------------------------------------------
+
+function typewrite(st, time)
+  if st == nil then return end
+  st = tostring(st) -- Prevenção caso passem um número
+
+  
   local clearst = st:gsub("@CSTRING_(.-)_CSTRING@", "")
   local t_time = time or 0.25 
   
   local len = #clearst
   if len == 0 then len = 1 end 
-  
   local t = t_time / len
 
-  for char in st:gmatch(".") do
-    term.setTextColor(colors[st[2]])
-    write(char:gsub("@CSTRING_(.-)_CSTRING@", ""))
-    os.sleep(t)
-  end 
+  local originalC = term.getTextColor()
+
+  
+  local function animate(text)
+    for char in text:gmatch(".") do
+      oldwrite(char) -- Usamos oldwrite para não reprocessar tags letra por letra
+      os.sleep(t)
+    end
+  end
+
+
+  local lastpos = 1
+  local found = false
+  
+  for before, name in st:gmatch("(.-)@CSTRING_(.-)_CSTRING@") do
+    found = true
+    
+
+    animate(before)
+    
+    local Nst = _G[name]
+    if Nst then
+
+      term.setTextColor(colors[Nst[2]] or colors.white)
+      animate(tostring(Nst[1]))
+      term.setTextColor(originalC)
+    else
+
+      animate("@CSTRING_"..name.."_CSTRING@")
+    end
+    
+    local tag = "@CSTRING_"..name.."_CSTRING@"
+    local _, endpos = st:find(tag, lastpos, true)
+    
+    if endpos ~= nil then
+        lastpos = endpos + 1
+    else
+        lastpos = lastpos + #before + #tag
+    end
+  end
+
+  if found then
+    if lastpos <= #st then
+      animate(st:sub(lastpos))
+    end
+  else
+    animate(st)
+  end
+
+  oldprint() 
 end
 
 
