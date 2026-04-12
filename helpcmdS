@@ -21,7 +21,7 @@ print("")
 term.write(" > libraries() --- See every library.")
 print("")
 --------------------------------------------------------------------------------------------------------------------
-term.write(" > reimport() --- Reimport loaded libraries.")
+term.write(" > reimport([lib]) --- Reimport loaded libraries.")
 print("")
 --------------------------------------------------------------------------------------------------------------------
 term.write(" > collect(")
@@ -51,6 +51,15 @@ print("")
 term.write("   not variable to true or false.")
 print("")
 --------------------------------------------------------------------------------------------------------------------
+term.write(" > unload(")
+term.setTextColor(colors.blue)
+term.write("[lib]")
+term.setTextColor(colors.green)
+term.write(") --- Unload a library.")
+print("")
+--------------------------------------------------------------------------------------------------------------------
+
+
 
 term.setTextColor(colors.yellow)
 print("=============================================")
