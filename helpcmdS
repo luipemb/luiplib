@@ -1,4 +1,4 @@
-vers = "x"
+vers = ""
 
 
 _G.rootcmds = function()
@@ -50,14 +50,7 @@ term.write(") --- Set an existing or")
 print("")
 term.write("   not variable to true or false.")
 print("")
---------------------------------------------------------------------------------------------------------------------
-term.write(" > unload(")
-term.setTextColor(colors.blue)
-term.write("[lib]")
-term.setTextColor(colors.green)
-term.write(") --- Unload a library.")
-print("")
---------------------------------------------------------------------------------------------------------------------
+
 
 
 
