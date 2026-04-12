@@ -1,4 +1,4 @@
-vers = "ex/onwait(0.4R)"
+vers = "ex /onwait(0.4R)"
 
 
 _G.rootcmds = function()
