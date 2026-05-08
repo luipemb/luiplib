@@ -1,6 +1,7 @@
 
 library = "optlib"
-vers = "V1.3.1"
+vers = "V1.3.2ex1"
+loaderM1 = 'Make sure to use "helplib(OptLib)"'
 ------------------------
 array = "array"
 key = "key"
